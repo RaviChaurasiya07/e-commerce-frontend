@@ -1,0 +1,64 @@
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Enterprise commerce platform</p>
+    <h1>A storefront built for conversion, scale, and operational clarity.</h1>
+    <p class="lead">
+      Product discovery, marketplace scale, and fast checkout come together in one Angular storefront shell.
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/products" class="primary">Explore products</a>
+      <a routerLink="/checkout" class="secondary">View checkout flow</a>
+    </div>
+  </div>
+
+  <div class="hero-panel">
+    @for (metric of metrics; track metric.label) {
+      <app-metric-tile [metric]="metric" />
+    }
+  </div>
+</section>
+
+<section class="band">
+  <app-section-header
+    eyebrow="Featured categories"
+    title="Browse the catalog"
+    subtitle="Fast, readable category cards for mobile-first navigation."
+    actionLabel="See all categories"
+    actionPath="/categories"
+  />
+
+  <div class="category-grid">
+    @for (category of featuredCategories; track category.id) {
+      <app-category-card [category]="category" />
+    }
+  </div>
+</section>
+
+<section class="band">
+  <app-section-header
+    eyebrow="Trending products"
+    title="Merchandising blocks that sell"
+    subtitle="Large cards, clear pricing, and a clean path to detail pages."
+    actionLabel="Open product listing"
+    actionPath="/products"
+  />
+
+  <div class="product-grid">
+    @for (product of featuredProducts; track product.id) {
+      <app-product-card [product]="product" />
+    }
+  </div>
+</section>
+
+<section class="newsletter">
+  <div>
+    <p class="eyebrow">Newsletter</p>
+    <h2>Keep the lifecycle active.</h2>
+    <p>Promotions, restocks, and high-intent campaigns can live behind this conversion block.</p>
+  </div>
+  <form>
+    <input type="email" placeholder="Email address" aria-label="Email address" />
+    <button type="submit">Join</button>
+  </form>
+</section>
+

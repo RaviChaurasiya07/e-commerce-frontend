@@ -1,0 +1,87 @@
+<div class="shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/" (click)="closeOverlays()">
+      <span class="brand-mark">A</span>
+      <span>
+        <strong>Aster Commerce</strong>
+        <small>Enterprise storefront</small>
+      </span>
+    </a>
+
+    <nav class="desktop-nav">
+      @for (item of navigation; track item.path) {
+        <a [routerLink]="item.path">{{ item.label }}</a>
+      }
+    </nav>
+
+    <div class="actions">
+      <a class="search-chip" routerLink="/search">Search products</a>
+      <button type="button" class="icon-button" (click)="toggleMenu()" aria-label="Toggle menu">Menu</button>
+      <button type="button" class="icon-button" (click)="toggleCart()" aria-label="Open cart">
+        Cart {{ cartSummary().count }}
+      </button>
+    </div>
+  </header>
+
+  <section class="mobile-drawer" [class.open]="menuOpen()">
+    @for (item of navigation; track item.path) {
+      <a [routerLink]="item.path" (click)="closeOverlays()">
+        <strong>{{ item.label }}</strong>
+        @if (item.description) {
+          <span>{{ item.description }}</span>
+        }
+      </a>
+    }
+  </section>
+
+  <div class="overlay" [class.open]="menuOpen() || cartOpen()" (click)="closeOverlays()"></div>
+
+  <aside class="cart-drawer" [class.open]="cartOpen()">
+    <div class="drawer-head">
+      <h2>Cart</h2>
+      <button type="button" class="close-button" (click)="toggleCart()">Close</button>
+    </div>
+
+    @if (cartStore.items().length) {
+      <div class="drawer-items">
+        @for (line of cartStore.items(); track line.product.id) {
+          <article class="drawer-item">
+            <img [src]="line.product.image" [alt]="line.product.name" />
+            <div>
+              <strong>{{ line.product.name }}</strong>
+              <span>{{ line.quantity }} x {{ line.product.price | currency:'USD':'symbol':'1.0-0' }}</span>
+            </div>
+          </article>
+        }
+      </div>
+      <div class="drawer-footer">
+        <div>
+          <span>Subtotal</span>
+          <strong>{{ cartSummary().subtotal | currency:'USD':'symbol':'1.0-0' }}</strong>
+        </div>
+        <a routerLink="/checkout" (click)="closeOverlays()">Checkout</a>
+      </div>
+    } @else {
+      <p class="empty-cart">Your cart is ready for products.</p>
+      <a routerLink="/products" (click)="closeOverlays()">Browse catalog</a>
+    }
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <strong>Aster Commerce</strong>
+      <p>Conversion-focused commerce frontend for customers, vendors, and operations teams.</p>
+    </div>
+    <div class="footer-links">
+      <a routerLink="/about-us">About</a>
+      <a routerLink="/contact-us">Contact</a>
+      <a routerLink="/privacy">Privacy</a>
+      <a routerLink="/terms">Terms</a>
+    </div>
+  </footer>
+</div>
+

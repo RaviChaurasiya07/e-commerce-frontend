@@ -1,0 +1,6 @@
+<a class="category-card" [routerLink]="['/products']" [style.--accent]="category().accent">
+  <span class="dot"></span>
+  <h3>{{ category().name }}</h3>
+  <p>{{ category().productCount | number }} products</p>
+</a>
+

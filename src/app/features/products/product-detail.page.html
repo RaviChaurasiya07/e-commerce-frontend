@@ -1,0 +1,58 @@
+@if (product) {
+  <section class="detail-shell">
+    <div class="gallery">
+      <div class="hero-image">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="thumb-row">
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <app-section-header eyebrow="Product detail" [title]="product.name" [subtitle]="product.summary" />
+      <p class="brand">{{ product.brand }} • {{ product.category }}</p>
+      <div class="price-row">
+        <strong>{{ product.price | currency:'USD':'symbol':'1.0-0' }}</strong>
+        @if (product.originalPrice) {
+          <span>{{ product.originalPrice | currency:'USD':'symbol':'1.0-0' }}</span>
+        }
+      </div>
+
+      <div class="variant-list">
+        @for (variant of product.variants; track variant.label) {
+          <div>
+            <span>{{ variant.label }}</span>
+            <strong>{{ variant.value }}</strong>
+          </div>
+        }
+      </div>
+
+      <div class="summary-actions">
+        <button type="button" (click)="addToCart()">Add to cart</button>
+        <a routerLink="/checkout">Buy now</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="related">
+    <app-section-header
+      eyebrow="Related products"
+      title="Keep the journey moving"
+      subtitle="Cross-sell and similar-product modules are ready for recommendation engines."
+    />
+    <div class="product-grid">
+      @for (item of relatedProducts; track item.id) {
+        <app-product-card [product]="item" />
+      }
+    </div>
+  </section>
+} @else {
+  <section class="missing">
+    <h1>Product not found</h1>
+    <a routerLink="/products">Back to products</a>
+  </section>
+}
+

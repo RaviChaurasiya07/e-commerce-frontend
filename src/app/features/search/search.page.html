@@ -1,0 +1,48 @@
+<app-section-header
+  eyebrow="Search"
+  title="Search, suggest, and recover intent"
+  subtitle="Debounced search, trending queries, and history sit together in one surface."
+/>
+
+<section class="search-shell">
+  <div class="search-box">
+    <input
+      type="search"
+      [value]="searchStore.query()"
+      (input)="searchStore.setQuery(($any($event.target)).value)"
+      placeholder="Search products, brands, and categories"
+      aria-label="Search products"
+    />
+    <button type="button" (click)="searchStore.commit(searchStore.query())">Search</button>
+  </div>
+
+  <div class="search-panels">
+    <section>
+      <h3>Suggestions</h3>
+      <div class="chips">
+        @for (suggestion of searchStore.suggestions(); track suggestion) {
+          <a routerLink="/products">{{ suggestion }}</a>
+        }
+      </div>
+    </section>
+
+    <section>
+      <h3>Recent searches</h3>
+      <div class="chips">
+        @for (term of searchStore.history(); track term) {
+          <button type="button" (click)="searchStore.setQuery(term)">{{ term }}</button>
+        }
+      </div>
+    </section>
+
+    <section>
+      <h3>Trending searches</h3>
+      <div class="chips">
+        @for (term of trending; track term) {
+          <a routerLink="/products">{{ term }}</a>
+        }
+      </div>
+    </section>
+  </div>
+</section>
+

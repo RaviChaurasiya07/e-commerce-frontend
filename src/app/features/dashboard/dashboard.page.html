@@ -1,0 +1,17 @@
+<app-section-header
+  [eyebrow]="(data['variant'] ?? 'customer') + ' dashboard'"
+  [title]="data['title'] ?? 'Dashboard'"
+  [subtitle]="data['subtitle'] ?? 'Role-aware views can swap between customer, vendor, and admin modes.'"
+/>
+
+<section class="metrics">
+  @for (metric of metrics; track metric.label) {
+    <app-metric-tile [metric]="metric" />
+  }
+</section>
+
+<section class="panel">
+  <h3>Operational snapshots</h3>
+  <p>Orders, inventory, CMS, users, and support workflows can be composed here.</p>
+</section>
+

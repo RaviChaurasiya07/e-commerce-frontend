@@ -1,0 +1,43 @@
+<app-section-header
+  eyebrow="Shopping cart"
+  title="Review, edit, and proceed"
+  subtitle="A utility-first cart surface with line items, quantity control, and totals."
+/>
+
+@if (cartStore.items().length) {
+  <section class="cart-shell">
+    <div class="lines">
+      @for (line of cartStore.items(); track line.product.id) {
+        <article class="line-item">
+          <img [src]="line.product.image" [alt]="line.product.name" />
+          <div>
+            <strong>{{ line.product.name }}</strong>
+            <p>{{ line.product.brand }}</p>
+          </div>
+          <input
+            type="number"
+            min="1"
+            [value]="line.quantity"
+            (change)="cartStore.setQuantity(line.product.id, $any($event.target).valueAsNumber)"
+          />
+          <strong>{{ line.product.price | currency:'USD':'symbol':'1.0-0' }}</strong>
+        </article>
+      }
+    </div>
+
+    <aside class="summary">
+      <h3>Cart summary</h3>
+      <p>Items: {{ cartStore.itemCount() }}</p>
+      <p>Subtotal: {{ cartStore.subtotal() | currency:'USD':'symbol':'1.0-0' }}</p>
+      <a routerLink="/checkout">Continue to checkout</a>
+    </aside>
+  </section>
+} @else {
+  <app-empty-state
+    title="Your cart is empty"
+    subtitle="Add products from the catalog or detail pages to unlock the checkout flow."
+    actionLabel="Browse products"
+    actionPath="/products"
+  />
+}
+

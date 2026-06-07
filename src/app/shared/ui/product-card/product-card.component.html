@@ -1,0 +1,28 @@
+<article class="product-card">
+  <div class="thumb">
+    <span class="badge" [class.dim]="product().stock === 'out-of-stock'">{{ product().badge ?? 'Featured' }}</span>
+    <img [src]="product().image" [alt]="product().name" />
+  </div>
+
+  <div class="body">
+    <p class="brand">{{ product().brand }} • {{ product().category }}</p>
+    <h3>{{ product().name }}</h3>
+    <p class="summary">{{ product().summary }}</p>
+
+    <div class="meta">
+      <span class="rating">★ {{ product().rating | number:'1.1-1' }}</span>
+      <span>{{ product().reviewCount | number }} reviews</span>
+    </div>
+
+    <div class="price-row">
+      <div>
+        <strong>{{ product().price | currency:'USD':'symbol':'1.0-0' }}</strong>
+        @if (product().originalPrice) {
+          <span class="old">{{ product().originalPrice | currency:'USD':'symbol':'1.0-0' }}</span>
+        }
+      </div>
+      <a [routerLink]="['/products', product().slug]">View</a>
+    </div>
+  </div>
+</article>
+

@@ -1,0 +1,34 @@
+<app-section-header
+  eyebrow="Product listing"
+  title="Filter first, then convert"
+  subtitle="A clean category and product surface for high-volume browsing."
+/>
+
+<section class="listing-shell">
+  <aside class="filters">
+    <label>
+      Search
+      <input
+        type="search"
+        [value]="query()"
+        (input)="query.set(($any($event.target)).value)"
+        placeholder="Search products"
+      />
+    </label>
+
+    <div class="filter-group">
+      <strong>Search tips</strong>
+      <p>History, suggestions, and product filters can hang off this panel.</p>
+    </div>
+  </aside>
+
+  <div class="results">
+    <p class="result-count">{{ visibleProducts().length | number }} products</p>
+    <div class="product-grid">
+      @for (product of visibleProducts(); track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  </div>
+</section>
+

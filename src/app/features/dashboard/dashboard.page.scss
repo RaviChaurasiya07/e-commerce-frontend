@@ -1,0 +1,15 @@
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.panel {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--app-radius);
+  border: 1px solid var(--app-border);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--app-shadow);
+}
+

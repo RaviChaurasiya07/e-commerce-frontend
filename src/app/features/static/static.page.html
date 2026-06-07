@@ -1,0 +1,20 @@
+<section class="static-shell">
+  <app-section-header
+    [eyebrow]="content['eyebrow'] ?? 'Enterprise content'"
+    [title]="pageTitle"
+    [subtitle]="content['subtitle'] ?? 'Structured content for marketing, support, and policy pages.'"
+  />
+
+  <div class="panel">
+    <p>
+      This route is a reusable static content surface. It is ready for about, FAQ, terms, privacy,
+      brand landing pages, and other long-form content.
+    </p>
+    @if (content['ctaLabel']) {
+      <a [routerLink]="content['ctaPath'] ?? '/products'">{{ content['ctaLabel'] }}</a>
+    } @else {
+      <a routerLink="/products">Browse products</a>
+    }
+  </div>
+</section>
+

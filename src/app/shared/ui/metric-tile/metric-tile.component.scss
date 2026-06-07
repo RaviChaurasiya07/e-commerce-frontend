@@ -1,0 +1,19 @@
+.metric-tile {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid var(--app-border);
+  background: var(--app-surface);
+}
+
+.metric-tile p,
+.metric-tile span {
+  margin: 0;
+  color: var(--app-muted);
+}
+
+.metric-tile strong {
+  font-size: 1.5rem;
+}
+

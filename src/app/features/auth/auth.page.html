@@ -1,0 +1,23 @@
+<app-section-header
+  eyebrow="Authentication"
+  title="Login, register, recover, and verify"
+  subtitle="The auth surface is structured for JWT, OTP, and account recovery flows."
+/>
+
+<section class="auth-shell">
+  <form [formGroup]="loginForm" class="panel">
+    <h3>Login</h3>
+    <label>Email <input formControlName="email" type="email" /></label>
+    <label>Password <input formControlName="password" type="password" /></label>
+    <button type="button">Sign in</button>
+  </form>
+
+  <form [formGroup]="registerForm" class="panel">
+    <h3>Create account</h3>
+    <label>Name <input formControlName="name" /></label>
+    <label>Email <input formControlName="email" type="email" /></label>
+    <label>Password <input formControlName="password" type="password" /></label>
+    <button type="button">Register</button>
+  </form>
+</section>
+

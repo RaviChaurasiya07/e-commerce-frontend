@@ -1,0 +1,30 @@
+.category-card {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid var(--app-border);
+  background: var(--app-surface);
+  box-shadow: var(--app-shadow);
+}
+
+.dot {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.category-card h3,
+.category-card p {
+  margin: 0;
+}
+
+.category-card h3 {
+  font-size: 1.05rem;
+}
+
+.category-card p {
+  color: var(--app-muted);
+}
+

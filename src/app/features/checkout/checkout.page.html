@@ -1,0 +1,35 @@
+<app-section-header
+  eyebrow="Checkout"
+  title="Multi-step checkout ready for expansion"
+  subtitle="Shipping, billing, delivery, payment, and review can each be split into dedicated steps."
+/>
+
+<section class="checkout-shell">
+  <form [formGroup]="shippingForm" class="panel">
+    <h3>Shipping</h3>
+    <label>Full name <input formControlName="fullName" /></label>
+    <label>Email <input formControlName="email" type="email" /></label>
+    <label>Address <textarea formControlName="address" rows="4"></textarea></label>
+  </form>
+
+  <form [formGroup]="paymentForm" class="panel">
+    <h3>Payment</h3>
+    <label>
+      Method
+      <select formControlName="method">
+        <option value="card">Card</option>
+        <option value="upi">UPI</option>
+        <option value="cod">Cash on delivery</option>
+      </select>
+    </label>
+    <label>Card number <input formControlName="cardNumber" inputmode="numeric" /></label>
+  </form>
+
+  <aside class="panel summary">
+    <h3>Order review</h3>
+    <p>Shipping, taxes, coupons, and delivery promises can be layered in here.</p>
+    <strong>$349.00</strong>
+    <button type="button">Place order</button>
+  </aside>
+</section>
+
