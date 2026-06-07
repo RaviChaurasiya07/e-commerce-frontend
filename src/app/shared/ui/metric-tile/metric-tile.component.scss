@@ -1,19 +1,34 @@
 .metric-tile {
   display: grid;
-  gap: 0.35rem;
-  padding: 1rem;
+  gap: 0.45rem;
+  min-height: 148px;
+  padding: 1.1rem;
   border-radius: var(--app-radius-sm);
   border: 1px solid var(--app-border);
-  background: var(--app-surface);
+  background:
+    radial-gradient(circle at top right, rgba(30, 111, 159, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 248, 252, 0.94));
+  box-shadow: var(--app-shadow);
 }
 
-.metric-tile p,
-.metric-tile span {
-  margin: 0;
+.label,
+.note {
   color: var(--app-muted);
 }
 
-.metric-tile strong {
-  font-size: 1.5rem;
+.label {
+  margin: 0;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
+.metric-tile strong {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1;
+}
+
+.note {
+  margin: 0;
+  line-height: 1.55;
+}

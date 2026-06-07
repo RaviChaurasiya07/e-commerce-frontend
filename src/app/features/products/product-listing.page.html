@@ -1,34 +1,52 @@
 <app-section-header
   eyebrow="Product listing"
   title="Filter first, then convert"
-  subtitle="A clean category and product surface for high-volume browsing."
+  subtitle="A cleaner catalog browsing surface with premium spacing, clearer hierarchy, and richer product cards."
 />
 
 <section class="listing-shell">
   <aside class="filters">
     <label>
       Search
-      <input
-        type="search"
-        [value]="query()"
-        (input)="query.set(($any($event.target)).value)"
-        placeholder="Search products"
-      />
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 5.25-12.83A7.5 7.5 0 0 1 10.5 18Z" />
+          <path d="m16 16 4.5 4.5" />
+        </svg>
+        <input
+          type="search"
+          [value]="query()"
+          (input)="query.set(($any($event.target)).value)"
+          placeholder="Search products"
+        />
+      </div>
     </label>
 
     <div class="filter-group">
       <strong>Search tips</strong>
-      <p>History, suggestions, and product filters can hang off this panel.</p>
+      <p>Use the richer catalog cards to compare price, rating, and product story at a glance.</p>
     </div>
   </aside>
 
   <div class="results">
-    <p class="result-count">{{ visibleProducts().length | number }} products</p>
-    <div class="product-grid">
-      @for (product of visibleProducts(); track product.id) {
-        <app-product-card [product]="product" />
-      }
+    <div class="results-head">
+      <p class="result-count">{{ visibleProducts().length | number }} products</p>
+      <a routerLink="/categories" class="results-action">Browse categories</a>
     </div>
+
+    @if (visibleProducts().length) {
+      <div class="product-grid">
+        @for (product of visibleProducts(); track product.id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    } @else {
+      <app-empty-state
+        title="No matching products"
+        subtitle="Try a different keyword or return to the broader catalog view."
+        actionLabel="Browse all products"
+        actionPath="/products"
+      />
+    }
   </div>
 </section>
-

@@ -1,44 +1,124 @@
-<div class="shell">
+<div class="shell" [class.scrolled]="scrolled()">
+  <div class="announcement-bar">
+    <span>Free shipping over $75</span>
+    <span>New season arrivals are live now</span>
+    <a routerLink="/deals">Explore offers</a>
+  </div>
+
   <header class="topbar">
     <a class="brand" routerLink="/" (click)="closeOverlays()">
       <span class="brand-mark">A</span>
-      <span>
+      <span class="brand-copy">
         <strong>Aster Commerce</strong>
-        <small>Enterprise storefront</small>
+        <small>Premium storefront</small>
       </span>
     </a>
 
-    <nav class="desktop-nav">
+    <nav class="desktop-nav" aria-label="Primary">
+      <div class="nav-dropdown">
+        <button type="button" class="nav-pill">
+          <span>Categories</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div class="dropdown">
+          @for (category of categories; track category.id) {
+            <a [routerLink]="['/products']">
+              <strong>{{ category.name }}</strong>
+              <span>{{ category.productCount | number }} products</span>
+            </a>
+          }
+        </div>
+      </div>
+
       @for (item of navigation; track item.path) {
-        <a [routerLink]="item.path">{{ item.label }}</a>
+        <a class="nav-link" [routerLink]="item.path">{{ item.label }}</a>
       }
     </nav>
 
+    <a class="search-bar" routerLink="/search">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10.5 18a7.5 7.5 0 1 1 5.25-12.83A7.5 7.5 0 0 1 10.5 18Z" />
+        <path d="m16 16 4.5 4.5" />
+      </svg>
+      <span>Search products, brands, and categories</span>
+    </a>
+
     <div class="actions">
-      <a class="search-chip" routerLink="/search">Search products</a>
-      <button type="button" class="icon-button" (click)="toggleMenu()" aria-label="Toggle menu">Menu</button>
-      <button type="button" class="icon-button" (click)="toggleCart()" aria-label="Open cart">
-        Cart {{ cartSummary().count }}
+      <a class="icon-pill" routerLink="/wishlist" aria-label="Open wishlist">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 21s-7.5-4.62-9.69-9.08C.66 8.15 2.35 5 5.85 5c1.94 0 3.27 1.02 4.15 2.16C10.88 6.02 12.2 5 14.15 5c3.5 0 5.19 3.15 3.54 6.92C19.5 16.38 12 21 12 21Z"
+          />
+        </svg>
+        @if (wishlistStore.count()) {
+          <span class="badge">{{ wishlistStore.count() }}</span>
+        }
+      </a>
+
+      <a class="icon-pill" routerLink="/auth" aria-label="Open account">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 13a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" />
+          <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />
+        </svg>
+      </a>
+
+      <button type="button" class="icon-pill menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+
+      <button type="button" class="icon-pill cart-toggle" (click)="toggleCart()" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 4H5L4 7M7 4l2 9h8l3-6H6.5M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+        </svg>
+        @if (cartStore.itemCount()) {
+          <span class="badge">{{ cartStore.itemCount() }}</span>
+        }
       </button>
     </div>
   </header>
 
   <section class="mobile-drawer" [class.open]="menuOpen()">
-    @for (item of navigation; track item.path) {
-      <a [routerLink]="item.path" (click)="closeOverlays()">
-        <strong>{{ item.label }}</strong>
-        @if (item.description) {
-          <span>{{ item.description }}</span>
+    <div class="drawer-head">
+      <div>
+        <strong>Browse</strong>
+        <span>Navigate the storefront</span>
+      </div>
+      <button type="button" class="close-button" (click)="closeOverlays()">Close</button>
+    </div>
+
+    <div class="drawer-links">
+      @for (item of navigation; track item.path) {
+        <a [routerLink]="item.path" (click)="closeOverlays()">
+          <strong>{{ item.label }}</strong>
+          @if (item.description) {
+            <span>{{ item.description }}</span>
+          }
+        </a>
+      }
+    </div>
+
+    <div class="drawer-block">
+      <p>Categories</p>
+      <div class="chips">
+        @for (category of categories; track category.id) {
+          <a [routerLink]="['/products']" (click)="closeOverlays()">{{ category.name }}</a>
         }
-      </a>
-    }
+      </div>
+    </div>
   </section>
 
   <div class="overlay" [class.open]="menuOpen() || cartOpen()" (click)="closeOverlays()"></div>
 
   <aside class="cart-drawer" [class.open]="cartOpen()">
     <div class="drawer-head">
-      <h2>Cart</h2>
+      <div>
+        <strong>Cart</strong>
+        <span>{{ cartSummary().count }} items</span>
+      </div>
       <button type="button" class="close-button" (click)="toggleCart()">Close</button>
     </div>
 
@@ -46,24 +126,29 @@
       <div class="drawer-items">
         @for (line of cartStore.items(); track line.product.id) {
           <article class="drawer-item">
-            <img [src]="line.product.image" [alt]="line.product.name" />
-            <div>
+            <img [src]="line.product.image" [alt]="line.product.name" loading="lazy" decoding="async" />
+            <div class="drawer-copy">
               <strong>{{ line.product.name }}</strong>
               <span>{{ line.quantity }} x {{ line.product.price | currency:'USD':'symbol':'1.0-0' }}</span>
             </div>
+            <button type="button" class="remove-button" (click)="removeFromCart(line.product.id)">Remove</button>
           </article>
         }
       </div>
+
       <div class="drawer-footer">
-        <div>
+        <div class="subtotal">
           <span>Subtotal</span>
           <strong>{{ cartSummary().subtotal | currency:'USD':'symbol':'1.0-0' }}</strong>
         </div>
         <a routerLink="/checkout" (click)="closeOverlays()">Checkout</a>
       </div>
     } @else {
-      <p class="empty-cart">Your cart is ready for products.</p>
-      <a routerLink="/products" (click)="closeOverlays()">Browse catalog</a>
+      <div class="empty-cart">
+        <h3>Your cart is ready for products.</h3>
+        <p>Save picks from the home page or product detail views.</p>
+        <a routerLink="/products" (click)="closeOverlays()">Browse catalog</a>
+      </div>
     }
   </aside>
 
@@ -72,16 +157,54 @@
   </main>
 
   <footer class="footer">
-    <div>
-      <strong>Aster Commerce</strong>
-      <p>Conversion-focused commerce frontend for customers, vendors, and operations teams.</p>
+    <div class="footer-brand">
+      <a class="brand footer-logo" routerLink="/">
+        <span class="brand-mark">A</span>
+        <span class="brand-copy">
+          <strong>Aster Commerce</strong>
+          <small>Modern commerce UI</small>
+        </span>
+      </a>
+      <p>
+        A premium Angular storefront for customers, vendors, and operations teams with fast browsing, clear
+        merchandising, and a clean path to conversion.
+      </p>
+      <div class="footer-newsletter">
+        <input type="email" placeholder="Email address" aria-label="Email address" />
+        <button type="button">Join</button>
+      </div>
     </div>
-    <div class="footer-links">
-      <a routerLink="/about-us">About</a>
-      <a routerLink="/contact-us">Contact</a>
-      <a routerLink="/privacy">Privacy</a>
-      <a routerLink="/terms">Terms</a>
+
+    @for (group of footerGroups; track group.title) {
+      <div class="footer-column">
+        <h3>{{ group.title }}</h3>
+        @for (link of group.links; track link.path) {
+          <a [routerLink]="link.path">{{ link.label }}</a>
+        }
+      </div>
+    }
+
+    <div class="footer-column">
+      <h3>Categories</h3>
+      @for (category of footerCategories; track category.id) {
+        <a [routerLink]="['/products']">{{ category.name }}</a>
+      }
+    </div>
+
+    <div class="footer-column">
+      <h3>Support</h3>
+      @for (link of supportLinks; track link.path) {
+        <a [routerLink]="link.path">{{ link.label }}</a>
+      }
     </div>
   </footer>
-</div>
 
+  <div class="footer-bottom">
+    <span>© 2026 Aster Commerce. All rights reserved.</span>
+    <div class="footer-links">
+      <a routerLink="/privacy">Privacy</a>
+      <a routerLink="/terms">Terms</a>
+      <a routerLink="/contact-us">Contact</a>
+    </div>
+  </div>
+</div>

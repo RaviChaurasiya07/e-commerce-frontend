@@ -1,28 +1,72 @@
-<article class="product-card">
-  <div class="thumb">
-    <span class="badge" [class.dim]="product().stock === 'out-of-stock'">{{ product().badge ?? 'Featured' }}</span>
-    <img [src]="product().image" [alt]="product().name" />
+<article class="product-card" [class.out-of-stock]="product().stock === 'out-of-stock'">
+  <div class="media">
+    <img
+      [src]="product().image"
+      [alt]="product().name"
+      loading="lazy"
+      decoding="async"
+    />
+
+    <div class="media-overlay">
+      <button
+        type="button"
+        class="icon-button"
+        [class.active]="isWishlisted()"
+        (click)="toggleWishlist()"
+        [attr.aria-label]="(isWishlisted() ? 'Remove from' : 'Add to') + ' wishlist for ' + product().name"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 21s-7.5-4.62-9.69-9.08C.66 8.15 2.35 5 5.85 5c1.94 0 3.27 1.02 4.15 2.16C10.88 6.02 12.2 5 14.15 5c3.5 0 5.19 3.15 3.54 6.92C19.5 16.38 12 21 12 21Z"
+          />
+        </svg>
+      </button>
+
+      <a class="quick-view" [routerLink]="['/products', product().slug]">Quick view</a>
+    </div>
+
+    <span class="badge">{{ product().badge ?? 'Featured' }}</span>
+    @if (product().stock === 'low-stock') {
+      <span class="stock low">Low stock</span>
+    } @else if (product().stock === 'out-of-stock') {
+      <span class="stock out">Sold out</span>
+    }
   </div>
 
   <div class="body">
-    <p class="brand">{{ product().brand }} • {{ product().category }}</p>
-    <h3>{{ product().name }}</h3>
+    <p class="brand">{{ product().brand }} · {{ product().category }}</p>
+    <div class="title-row">
+      <h3>{{ product().name }}</h3>
+      <span class="rating">★ {{ product().rating | number:'1.1-1' }}</span>
+    </div>
+
     <p class="summary">{{ product().summary }}</p>
 
-    <div class="meta">
-      <span class="rating">★ {{ product().rating | number:'1.1-1' }}</span>
+    <div class="review-row">
       <span>{{ product().reviewCount | number }} reviews</span>
+      <span class="bullet">•</span>
+      <span>{{ product().variants[0]?.value }}</span>
     </div>
 
     <div class="price-row">
-      <div>
+      <div class="price-stack">
         <strong>{{ product().price | currency:'USD':'symbol':'1.0-0' }}</strong>
         @if (product().originalPrice) {
-          <span class="old">{{ product().originalPrice | currency:'USD':'symbol':'1.0-0' }}</span>
+          <span>{{ product().originalPrice | currency:'USD':'symbol':'1.0-0' }}</span>
         }
       </div>
-      <a [routerLink]="['/products', product().slug]">View</a>
+
+      <button
+        type="button"
+        class="add-to-cart"
+        (click)="addToCart()"
+        [disabled]="product().stock === 'out-of-stock'"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 4h-2l-1 2M7 4l2 9h8l3-6H6.5M7 4h11l2 0.5M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+        </svg>
+        Add to cart
+      </button>
     </div>
   </div>
 </article>
-

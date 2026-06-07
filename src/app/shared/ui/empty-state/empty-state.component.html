@@ -1,8 +1,10 @@
 <section class="empty-state">
-  <h3>{{ title() }}</h3>
-  <p>{{ subtitle() }}</p>
+  <span class="mark">404</span>
+  <div class="copy">
+    <h3>{{ title() }}</h3>
+    <p>{{ subtitle() }}</p>
+  </div>
   @if (actionLabel()) {
     <a [routerLink]="actionPath()">{{ actionLabel() }}</a>
   }
 </section>
-

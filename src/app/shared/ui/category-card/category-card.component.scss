@@ -1,30 +1,69 @@
 .category-card {
+  position: relative;
   display: grid;
-  gap: 0.5rem;
+  gap: 1rem;
+  min-height: 180px;
   padding: 1rem;
-  border-radius: var(--app-radius-sm);
+  border-radius: var(--app-radius);
   border: 1px solid var(--app-border);
-  background: var(--app-surface);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 18%, white), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 248, 252, 0.92));
   box-shadow: var(--app-shadow);
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
 }
 
-.dot {
-  width: 0.95rem;
-  height: 0.95rem;
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--app-shadow-strong);
+  border-color: color-mix(in srgb, var(--accent) 30%, white);
+}
+
+.accent-bar {
+  width: 3.2rem;
+  height: 0.42rem;
   border-radius: 999px;
   background: var(--accent);
 }
 
-.category-card h3,
-.category-card p {
+.content {
+  display: grid;
+  gap: 0.3rem;
+  align-self: end;
+}
+
+.eyebrow,
+.content p {
   margin: 0;
 }
 
-.category-card h3 {
-  font-size: 1.05rem;
+.eyebrow {
+  color: var(--app-muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.category-card p {
+.content h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.content p {
   color: var(--app-muted);
 }
 
+.chip {
+  justify-self: start;
+  padding: 0.45rem 0.72rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, white);
+  color: var(--app-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+}

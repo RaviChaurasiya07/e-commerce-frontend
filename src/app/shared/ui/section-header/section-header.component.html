@@ -1,12 +1,12 @@
 <header class="section-header">
-  @if (eyebrow()) {
-    <p class="eyebrow">{{ eyebrow() }}</p>
-  }
-
   <div class="copy">
+    @if (eyebrow()) {
+      <p class="eyebrow">{{ eyebrow() }}</p>
+    }
+
     <h2>{{ title() }}</h2>
     @if (subtitle()) {
-      <p>{{ subtitle() }}</p>
+      <p class="subtitle">{{ subtitle() }}</p>
     }
   </div>
 
@@ -14,4 +14,3 @@
     <a class="action" [routerLink]="actionPath()">{{ actionLabel() }}</a>
   }
 </header>
-

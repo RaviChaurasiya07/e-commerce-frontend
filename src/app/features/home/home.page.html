@@ -1,18 +1,58 @@
 <section class="hero">
   <div class="hero-copy">
-    <p class="eyebrow">Enterprise commerce platform</p>
-    <h1>A storefront built for conversion, scale, and operational clarity.</h1>
+    <p class="eyebrow">Premium commerce storefront</p>
+    <h1>Editorial shopping, premium utility, and conversion-first design.</h1>
     <p class="lead">
-      Product discovery, marketplace scale, and fast checkout come together in one Angular storefront shell.
+      A refined Angular commerce experience with high-impact merchandising, fast browsing, and a frictionless path
+      from discovery to checkout.
     </p>
+
     <div class="hero-actions">
-      <a routerLink="/products" class="primary">Explore products</a>
-      <a routerLink="/checkout" class="secondary">View checkout flow</a>
+      <a routerLink="/products" class="primary">Shop the collection</a>
+      <a routerLink="/search" class="secondary">Search the catalog</a>
+    </div>
+
+    <div class="hero-pills" aria-label="Store highlights">
+      @for (pill of heroPills; track pill) {
+        <span>{{ pill }}</span>
+      }
     </div>
   </div>
 
-  <div class="hero-panel">
-    @for (metric of metrics; track metric.label) {
+  <div class="hero-visual">
+    <article class="hero-media">
+      <img
+        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=80"
+        alt="Featured fashion product"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="floating-card top">
+        <span>New season</span>
+        <strong>48h dispatch</strong>
+      </div>
+      <div class="floating-card bottom">
+        <span>Curated for</span>
+        <strong>Modern D2C launches</strong>
+      </div>
+    </article>
+
+    <div class="hero-rail">
+      <div class="rail-card">
+        <p>Featured brands</p>
+        <strong>Luxury, sport, and lifestyle</strong>
+        <span>Balanced for premium direct-to-consumer experiences.</span>
+      </div>
+      <div class="rail-card accent">
+        <p>Drop window</p>
+        <strong>Limited time exclusives</strong>
+        <span>Promotions, bundles, and editorial curation in one view.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    @for (metric of heroStats; track metric.label) {
       <app-metric-tile [metric]="metric" />
     }
   </div>
@@ -21,8 +61,8 @@
 <section class="band">
   <app-section-header
     eyebrow="Featured categories"
-    title="Browse the catalog"
-    subtitle="Fast, readable category cards for mobile-first navigation."
+    title="Browse the catalog by intent"
+    subtitle="Rebuilt as a premium category rail with stronger hierarchy, cleaner spacing, and better scanability."
     actionLabel="See all categories"
     actionPath="/categories"
   />
@@ -36,29 +76,120 @@
 
 <section class="band">
   <app-section-header
-    eyebrow="Trending products"
-    title="Merchandising blocks that sell"
-    subtitle="Large cards, clear pricing, and a clean path to detail pages."
+    eyebrow="Promotional banners"
+    title="Editorial placement for campaigns and launches"
+    subtitle="These blocks give you room for seasonal drops, limited offers, and high-conversion storytelling."
+    actionLabel="View deals"
+    actionPath="/deals"
+  />
+
+  <div class="promo-grid">
+    @for (banner of promoBanners; track banner.title) {
+      <article class="promo-card" [style.--banner-image]="'url(' + banner.image + ')'" [style.--banner-accent]="banner.accent">
+        <div class="promo-copy">
+          <p>{{ banner.eyebrow }}</p>
+          <h3>{{ banner.title }}</h3>
+          <span>{{ banner.copy }}</span>
+          <a [routerLink]="banner.ctaPath">{{ banner.ctaLabel }}</a>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="band">
+  <app-section-header
+    eyebrow="Best sellers"
+    title="Products with the highest purchase confidence"
+    subtitle="Modern product cards with image hover states, wishlist actions, quick view, and cart controls."
     actionLabel="Open product listing"
     actionPath="/products"
   />
 
   <div class="product-grid">
-    @for (product of featuredProducts; track product.id) {
+    @for (product of bestSellers; track product.id) {
       <app-product-card [product]="product" />
     }
   </div>
 </section>
 
-<section class="newsletter">
-  <div>
-    <p class="eyebrow">Newsletter</p>
-    <h2>Keep the lifecycle active.</h2>
-    <p>Promotions, restocks, and high-intent campaigns can live behind this conversion block.</p>
+<section class="band split">
+  <div class="split-head">
+    <app-section-header
+      eyebrow="New arrivals"
+      title="Fresh inventory, just landed"
+      subtitle="A second curated grid for first-time visitors, loyal customers, and returning shoppers."
+    />
   </div>
-  <form>
-    <input type="email" placeholder="Email address" aria-label="Email address" />
-    <button type="submit">Join</button>
-  </form>
+
+  <div class="product-grid compact">
+    @for (product of newArrivals; track product.id) {
+      <app-product-card [product]="product" />
+    }
+  </div>
 </section>
 
+<section class="band testimonials-band">
+  <app-section-header
+    eyebrow="Customer testimonials"
+    title="Built to feel like a premium brand, not a template"
+    subtitle="The visual system keeps focus on the products while still feeling polished, editorial, and modern."
+  />
+
+  <div class="testimonials-grid">
+    @for (testimonial of testimonials; track testimonial.name) {
+      <article class="testimonial-card">
+        <div class="quote-mark">“</div>
+        <p>{{ testimonial.quote }}</p>
+        <div class="person">
+          <img [src]="testimonial.image" [alt]="testimonial.name" loading="lazy" decoding="async" />
+          <div>
+            <strong>{{ testimonial.name }}</strong>
+            <span>{{ testimonial.role }}</span>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="band brand-band">
+  <div class="brand-copy">
+    <p class="eyebrow">Brand showcase</p>
+    <h2>Designed for the names people already trust</h2>
+    <p>
+      Use this strip to represent strategic brand partners, in-house labels, or marketplace partners with a premium
+      presentation.
+    </p>
+  </div>
+
+  <div class="brand-rail" aria-label="Brand partners">
+    @for (brand of brandLogos; track brand) {
+      <span>{{ brand }}</span>
+    }
+  </div>
+</section>
+
+<section class="band newsletter-band">
+  <div class="newsletter-copy">
+    <p class="eyebrow">Newsletter subscription</p>
+    <h2>Keep the lifecycle active.</h2>
+    <p>
+      Collect emails with a polished value proposition: fresh drops, private sale access, and back-in-stock alerts.
+    </p>
+
+    <ul>
+      @for (item of newsletterHighlights; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  </div>
+
+  <form class="newsletter-form">
+    <label>
+      Email address
+      <input type="email" placeholder="name@company.com" aria-label="Email address" />
+    </label>
+    <button type="submit">Join the list</button>
+  </form>
+</section>

@@ -6,9 +6,15 @@
   margin-bottom: 1rem;
 }
 
+.copy {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 760px;
+}
+
 .eyebrow {
-  margin: 0 0 0.35rem;
-  font-size: 0.78rem;
+  margin: 0;
+  font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--app-primary-2);
@@ -16,25 +22,43 @@
 
 .copy h2 {
   margin: 0;
-  font-size: 1.55rem;
-  line-height: 1.15;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  line-height: 1.08;
 }
 
-.copy p {
-  margin: 0.45rem 0 0;
+.subtitle {
+  margin: 0;
   color: var(--app-muted);
+  line-height: 1.6;
 }
 
 .action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.75rem;
+  min-height: 2.85rem;
   padding: 0 1rem;
   border-radius: 999px;
   border: 1px solid var(--app-border);
-  background: var(--app-surface);
+  background: rgba(255, 255, 255, 0.86);
   color: var(--app-primary);
-  font-weight: 600;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
+.action:hover {
+  transform: translateY(-1px);
+  border-color: rgba(30, 111, 159, 0.24);
+  box-shadow: var(--app-shadow);
+}
+
+@media (max-width: 760px) {
+  .section-header {
+    align-items: start;
+    flex-direction: column;
+  }
+}

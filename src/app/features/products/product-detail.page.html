@@ -2,8 +2,10 @@
   <section class="detail-shell">
     <div class="gallery">
       <div class="hero-image">
-        <img [src]="product.image" [alt]="product.name" />
+        <img [src]="product.image" [alt]="product.name" loading="eager" decoding="async" />
+        <span class="badge">{{ product.badge ?? 'Featured' }}</span>
       </div>
+
       <div class="thumb-row">
         <div class="thumb"></div>
         <div class="thumb"></div>
@@ -13,7 +15,14 @@
 
     <div class="summary">
       <app-section-header eyebrow="Product detail" [title]="product.name" [subtitle]="product.summary" />
-      <p class="brand">{{ product.brand }} • {{ product.category }}</p>
+      <p class="brand">{{ product.brand }} · {{ product.category }}</p>
+
+      <div class="rating-row">
+        <span class="rating">★ {{ product.rating | number:'1.1-1' }}</span>
+        <span>{{ product.reviewCount | number }} reviews</span>
+        <span>{{ product.stock === 'in-stock' ? 'In stock' : 'Limited stock' }}</span>
+      </div>
+
       <div class="price-row">
         <strong>{{ product.price | currency:'USD':'symbol':'1.0-0' }}</strong>
         @if (product.originalPrice) {
@@ -33,6 +42,17 @@
       <div class="summary-actions">
         <button type="button" (click)="addToCart()">Add to cart</button>
         <a routerLink="/checkout">Buy now</a>
+      </div>
+
+      <div class="feature-strip">
+        <div>
+          <strong>Free shipping</strong>
+          <span>On qualifying orders</span>
+        </div>
+        <div>
+          <strong>30-day returns</strong>
+          <span>Hassle-free exchange policy</span>
+        </div>
       </div>
     </div>
   </section>
@@ -55,4 +75,3 @@
     <a routerLink="/products">Back to products</a>
   </section>
 }
-
