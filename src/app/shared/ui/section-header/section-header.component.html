@@ -1,0 +1,17 @@
+<header class="section-header">
+  @if (eyebrow()) {
+    <p class="eyebrow">{{ eyebrow() }}</p>
+  }
+
+  <div class="copy">
+    <h2>{{ title() }}</h2>
+    @if (subtitle()) {
+      <p>{{ subtitle() }}</p>
+    }
+  </div>
+
+  @if (actionLabel()) {
+    <a class="action" [routerLink]="actionPath()">{{ actionLabel() }}</a>
+  }
+</header>
+

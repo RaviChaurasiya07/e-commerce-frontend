@@ -1,16 +1,69 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://localhost:3000/api',
+  appName: 'E-Commerce',
+  appVersion: '1.0.0',
+  defaultLanguage: 'en',
+  supportedLanguages: ['en', 'hi', 'fr', 'es', 'ar'],
+  pagination: {
+    defaultPageSize: 12,
+    pageSizeOptions: [12, 24, 48, 96],
+  },
+  features: {
+    enablePWA: true,
+    enableSSR: true,
+    enableAnalytics: true,
+    enablePushNotifications: true,
+    enableWishlist: true,
+    enableMultiVendor: true,
+    enableReviews: true,
+    enableDeals: true,
+    enableCoupons: true,
+    enableGiftCards: true,
+  },
+  auth: {
+    tokenKey: 'access_token',
+    refreshTokenKey: 'refresh_token',
+    tokenExpiryKey: 'token_expiry',
+    otpLength: 6,
+    otpResendTimer: 30,
+    maxLoginAttempts: 5,
+    sessionTimeoutMinutes: 30,
+  },
+  images: {
+    maxSizeMB: 5,
+    acceptedFormats: ['jpg', 'jpeg', 'png', 'webp', 'avif'],
+    placeholderUrl: 'assets/images/placeholder.svg',
+    productPlaceholder: 'assets/images/product-placeholder.svg',
+    avatarPlaceholder: 'assets/images/avatar-placeholder.svg',
+  },
+  cache: {
+    ttl: 300000, // 5 minutes
+    searchDebounce: 300,
+    maxSearchHistory: 10,
+  },
+  currency: {
+    code: 'INR',
+    symbol: '₹',
+    locale: 'en-IN',
+  },
+  social: {
+    facebook: 'https://facebook.com/ecommerce',
+    twitter: 'https://twitter.com/ecommerce',
+    instagram: 'https://instagram.com/ecommerce',
+    youtube: 'https://youtube.com/ecommerce',
+  },
+  contact: {
+    email: 'support@ecommerce.com',
+    phone: '+91-1800-123-4567',
+    address: '123, Business Park, Mumbai, India - 400001',
+  },
+  seo: {
+    defaultTitle: 'E-Commerce - Shop the Best Products Online',
+    defaultDescription: 'Discover amazing products at best prices. Shop electronics, fashion, home & more.',
+    defaultKeywords: 'ecommerce, online shopping, best deals, electronics, fashion',
+    siteUrl: 'https://ecommerce.com',
+    siteName: 'E-Commerce',
+    twitterHandle: '@ecommerce',
+  },
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
